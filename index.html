@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Особенный сюрприз для тебя сашуля❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 50%, #ffb3c1 100%);
+            min-height: 100vh;
+        }
+        .font-love {
+            font-family: 'Marck Script', cursive;
+        }
+        /* Анимация падающих сердечек и лепестков */
+        .heart-particle {
+            position: fixed;
+            top: -10%;
+            pointer-events: none;
+            animation: fall linear infinite;
+            z-index: 1;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(105vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.90);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 182, 193, 0.6);
+            box-shadow: 0 20px 40px rgba(219, 112, 147, 0.2);
+        }
+    </style>
+</head>
+<body class="text-gray-800 flex flex-col justify-between min-h-screen relative">
+
+    <div id="hearts-container"></div>
+
+    <!-- Основной контейнер -->
+    <main class="container mx-auto px-4 py-8 flex-grow flex items-center justify-center relative z-10">
+
+        <!-- ==========================================
+             ЭКРАН 0: ПРИВЕТСТВИЕ (Ready?)
+        =========================================== -->
+        <section id="step-welcome" class="glass-card max-w-xl w-full rounded-3xl p-6 md:p-10 text-center transition-all duration-500">
+            <div class="text-6xl mb-4 animate-bounce">✨💌✨</div>
+            
+            <h1 class="text-3xl md:text-5xl font-bold text-rose-600 mb-3 font-love">Привет, моя радость!</h1>
+            
+            <p class="text-gray-700 text-base md:text-lg mb-6 leading-relaxed">
+                Я подготовил для тебя маленький интерактивный квест с сюрпризом в конце. Готова проверить свою интуицию и ответить на парочку тёплых вопросов? 😉
+            </p>
+
+            <!-- 📸 МЕСТО ДЛЯ ФОТО №0 (Приветственное фото) -->
+            <div class="mb-6 overflow-hidden rounded-2xl shadow-md border-2 border-rose-200">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80" 
+                     alt="Уютное сердечко" 
+                     class="w-full h-48 md:h-56 object-cover hover:scale-105 transition duration-500">
+            </div>
+
+            <button onclick="nextStep('step-welcome', 'step-quest-1')" 
+                    class="bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-bold py-4 px-10 rounded-full shadow-lg transform transition active:scale-95 hover:scale-105 text-lg cursor-pointer">
+                Готова? Начать! ✨ (Ready?)
+            </button>
+        </section>
+
+        <!-- ==========================================
+             ЭКРАН 1: ВОПРОС 1 (Чаёчек)
+        =========================================== -->
+        <section id="step-quest-1" class="glass-card max-w-xl w-full rounded-3xl p-6 md:p-8 text-center hidden transition-all duration-500">
+            <div class="text-sm font-bold text-rose-500 uppercase tracking-widest mb-1">Загадка №1</div>
+            
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 font-love">Какой напиток делает любой наш день теплее и уютнее? ✨</h2>
+
+            <!-- 📸 МЕСТО ДЛЯ ФОТО №1 (Чаёчек) -->
+            <div class="mb-5 overflow-hidden rounded-2xl shadow-md border-2 border-rose-200">
+                <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80" 
+                     alt="Уютная чашка чая" 
+                     class="w-full h-48 md:h-56 object-cover hover:scale-105 transition duration-500">
+            </div>
+
+            <!-- Варианты ответов -->
+            <div class="space-y-3">
+                <!-- Правильный ответ: Чаёчек -->
+                <button onclick="nextStep('step-quest-1', 'step-quest-2')" 
+                        class="w-full text-left p-4 rounded-xl border border-rose-200 hover:bg-rose-100 hover:border-rose-300 transition font-medium text-gray-700 flex items-center justify-between cursor-pointer shadow-sm">
+                    <span>Чаёчек ☕️</span>
+                    <span class="text-rose-400 font-bold">✨</span>
+                </button>
+
+                <!-- Неправильный ответ 1 -->
+                <button onclick="wrongAnswer('Холодно! Вспоминай про самый душевный и теплый напиток! 🫖')" 
+                        class="w-full text-left p-4 rounded-xl border border-rose-200 hover:bg-rose-50 transition font-medium text-gray-700 cursor-pointer shadow-sm">
+                    Газировка из магазина 🥤
+                </button>
+                
+                <!-- Неправильный ответ 2 -->
+                <button onclick="wrongAnswer('Обычная вода — это полезно, но не так уютно! 😉')" 
+                        class="w-full text-left p-4 rounded-xl border border-rose-200 hover:bg-rose-50 transition font-medium text-gray-700 cursor-pointer shadow-sm">
+                    Просто водичка 💧
+                </button>
+            </div>
+            <p id="feedback-1" class="mt-4 text-rose-600 font-semibold text-sm min-h-[24px]"></p>
+        </section>
+
+        <!-- ==========================================
+             ЭКРАН 2: ВОПРОС 2
+        =========================================== -->
+        <section id="step-quest-2" class="glass-card max-w-xl w-full rounded-3xl p-6 md:p-8 text-center hidden transition-all duration-500">
+            <div class="text-sm font-bold text-rose-500 uppercase tracking-widest mb-1">Загадка №2</div>
+            
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 font-love">Что создаёт ту самую волшебную и тёплую атмосферу рядом с тобой? 🕯️</h2>
+
+            <!-- 📸 МЕСТО ДЛЯ ФОТО №2 -->
+            <div class="mb-5 overflow-hidden rounded-2xl shadow-md border-2 border-rose-200">
+                <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80" 
+                     alt="Уютные гирлянды и огоньки" 
+                     class="w-full h-48 md:h-56 object-cover hover:scale-105 transition duration-500">
+            </div>
+
+            <div class="space-y-3">
+                <button onclick="wrongAnswer('Включенный телевизор — это скучно! Попробуй другой вариант 😉')" 
+                        class="w-full text-left p-4 rounded-xl border border-rose-200 hover:bg-rose-50 transition font-medium text-gray-700 cursor-pointer shadow-sm">
+                    Шумный телевизор на фоне
+                </button>
+                
+                <button onclick="nextStep('step-quest-2', 'step-quest-3')" 
+                        class="w-full text-left p-4 rounded-xl border border-rose-200 hover:bg-rose-100 hover:border-rose-300 transition font-medium text-gray-700 flex items-center justify-between cursor-pointer shadow-sm">
+                    <span>Твой искренний смех, доброта и уютные разговоры ✨</span>
+                    <span class="text-rose-400 font-bold">✨</span>
+                </button>
+
+                <button onclick="wrongAnswer('Тишина тоже хороша, но есть кое-что получше! 💛')" 
+                        class="w-full text-left p-4 rounded-xl border border-rose-200 hover:bg-rose-50 transition font-medium text-gray-700 cursor-pointer shadow-sm">
+                    Полная тишина в комнате
+                </button>
+            </div>
+            <p id="feedback-2" class="mt-4 text-rose-600 font-semibold text-sm min-h-[24px]"></p>
+        </section>
+
+        <!-- ==========================================
+             ЭКРАН 3: ВОПРОС 3
+        =========================================== -->
+        <section id="step-quest-3" class="glass-card max-w-xl w-full rounded-3xl p-6 md:p-8 text-center hidden transition-all duration-500">
+            <div class="text-sm font-bold text-rose-500 uppercase tracking-widest mb-1">Загадка №3</div>
+            
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 font-love">Какое главное суперсвойство есть у тебя? 🌌</h2>
+
+            <!-- 📸 МЕСТО ДЛЯ ФОТО №3 -->
+            <div class="mb-5 overflow-hidden rounded-2xl shadow-md border-2 border-rose-200">
+                <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80" 
+                     alt="Звёздное небо" 
+                     class="w-full h-48 md:h-56 object-cover hover:scale-105 transition duration-500">
+            </div>
+
+            <div class="space-y-3">
+                <button onclick="nextStep('step-quest-3', 'step-final')" 
+                        class="w-full text-left p-4 rounded-xl border border-rose-200 hover:bg-rose-100 hover:border-rose-300 transition font-medium text-gray-700 cursor-pointer shadow-sm">
+                    Делать каждый мой день счастливее просто своим присутствием ❤️
+                </button>
+                <button onclick="nextStep('step-quest-3', 'step-final')" 
+                        class="w-full text-left p-4 rounded-xl border border-rose-200 hover:bg-rose-100 hover:border-rose-300 transition font-medium text-gray-700 cursor-pointer shadow-sm">
+                    Дарить тепло и заставлять улыбаться даже в самый пасмурный день ☀️
+                </button>
+            </div>
+            <p class="mt-4 text-gray-400 text-xs">Подсказка: тут оба ответа правильные! 😉</p>
+        </section>
+
+        <!-- ==========================================
+             ЭКРАН 4: ФИНАЛ — ПРИЗНАНИЕ И ПИСЬМО
+        =========================================== -->
+        <section id="step-final" class="glass-card max-w-xl w-full rounded-3xl p-6 md:p-10 text-center hidden transition-all duration-500 relative">
+            <div class="text-5xl mb-3 animate-bounce">💌</div>
+            
+            <h2 class="text-3xl md:text-4xl font-bold text-rose-600 mb-4 font-love">Моему любимому человеку...</h2>
+            
+            <!-- 📸 МЕСТО ДЛЯ ФОТО №4 (Перед письмом) -->
+            <div class="mb-5 overflow-hidden rounded-2xl shadow-md border-2 border-rose-200">
+                <img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=800&q=80" 
+                     alt="Эстетичный букет цветов" 
+                     class="w-full h-48 object-cover">
+            </div>
+
+            <!-- Текст признания в любви -->
+            <div class="text-gray-700 text-left space-y-3 mb-6 bg-white/80 p-5 rounded-2xl border border-pink-100 text-sm md:text-base leading-relaxed max-h-56 overflow-y-auto shadow-inner">
+                <p>
+                    Спасибо тебе за то, что ты есть в моей жизни. С тобой каждый момент наполняется особым смыслом, глубоким теплом и настоящим счастьем.
+                </p>
+                <p>
+                    Я ценю твоё внимание, твою заботу и то, насколько волшебно и легко мне рядом с тобой. Ты делаешь мой мир бесконечно красивым!
+                </p>
+                <p class="font-bold text-rose-600 text-center text-lg pt-2">
+                    Я тебя очень сильно люблю! ❤️
+                </p>
+            </div>
+
+            <!-- Вопрос с бегающей кнопкой "Нет" -->
+            <div class="space-y-4">
+                <p class="font-semibold text-lg text-gray-800">А ты меня любишь? 🥺</p>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 relative min-h-[60px]" id="buttons-container">
+                    
+                    <!-- Кнопка ДА -->
+                    <button onclick="acceptLove()" class="bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition active:scale-95 hover:scale-105 text-lg w-full sm:w-auto z-10 cursor-pointer">
+                        Да, очень! 🥰
+                    </button>
+
+                    <!-- Бегающая кнопка НЕТ -->
+                    <button id="btn-no" onmouseover="moveButton()" onclick="moveButton()" class="bg-gray-400 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all text-lg w-full sm:w-auto absolute sm:relative">
+                        Нет 😜
+                    </button>
+                </div>
+            </div>
+
+            <!-- Сообщение после нажатия "Да" -->
+            <div id="success-message" class="hidden mt-6 p-4 bg-rose-100 border border-rose-300 text-rose-700 rounded-2xl animate-fade-in">
+                <p class="text-3xl mb-2">🎉💖✨</p>
+                <p class="font-bold text-xl">Урааа! Я самый счастливый человек!</p>
+                <p class="text-sm mt-1">Крепко-крепко тебя обнимаю! 🫂❤️</p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Подвал -->
+    <footer class="text-center py-4 text-xs text-rose-400 relative z-10 font-medium">
+        Сделано с любовью специально для тебя ❤️
+    </footer>
+
+    <script>
+        // --- 1. Анимация падающих сердечек и лепестков ---
+        function createHeart() {
+            const container = document.getElementById('hearts-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            
+            const symbols = ['❤️', '💖', '🌸', '💕', '🌹', '✨'];
+            heart.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+            
+            container.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+
+        setInterval(createHeart, 450);
+
+        // --- 2. Переключение между шагами квеста ---
+        function nextStep(currentId, nextId) {
+            const current = document.getElementById(currentId);
+            const next = document.getElementById(nextId);
+
+            current.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                current.classList.add('hidden');
+                current.classList.remove('opacity-0', 'scale-95');
+                
+                next.classList.remove('hidden');
+                next.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    next.classList.remove('opacity-0', 'scale-95');
+                }, 50);
+            }, 300);
+        }
+
+        // --- 3. Подсказка при выборе неверного ответа ---
+        function wrongAnswer(message) {
+            const activeSection = document.querySelector('section:not(.hidden)');
+            const feedbackElem = activeSection.querySelector('p[id^="feedback-"]');
+            if (feedbackElem) {
+                feedbackElem.innerText = message;
+                feedbackElem.classList.add('animate-bounce');
+                setTimeout(() => feedbackElem.classList.remove('animate-bounce'), 1000);
+            }
+        }
+
+        // --- 4. Бегающая кнопка "Нет" ---
+        function moveButton() {
+            const btnNo = document.getElementById('btn-no');
+            const x = Math.random() * (window.innerWidth - 120) - (window.innerWidth / 2 - 60);
+            const y = Math.random() * (window.innerHeight - 120) - (window.innerHeight / 2 - 60);
+            
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = Math.max(20, Math.min(window.innerWidth - 120, Math.abs(x))) + 'px';
+            btnNo.style.top = Math.max(20, Math.min(window.innerHeight - 60, Math.abs(y))) + 'px';
+        }
+
+        // --- 5. Нажатие кнопки "Да" и вызов праздничного салюта ---
+        function acceptLove() {
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+
+            setTimeout(() => {
+                confetti({
+                    particleCount: 80,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+                confetti({
+                    particleCount: 80,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
+            }, 300);
+
+            document.getElementById('buttons-container').classList.add('hidden');
+            document.getElementById('success-message').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
